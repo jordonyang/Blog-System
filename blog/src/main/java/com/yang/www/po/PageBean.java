@@ -1,18 +1,15 @@
-package com.java1234.entity;
+package com.yang.www.po;
 
-/**
- * 分页Model类
- * @author 
- *
- */
 public class PageBean {
 
-	private int page; // 第几页
-	private int pageSize; // 每页记录数
-	private int start;  // 起始页
-	
-	
-	public PageBean(int page, int pageSize) {
+	private int page;
+	private int pageSize;
+	private int start;
+
+    public PageBean() {
+    }
+
+    public PageBean(int page, int pageSize) {
 		super();
 		this.page = page;
 		this.pageSize = pageSize;
@@ -36,6 +33,13 @@ public class PageBean {
 	public int getStart() {
 		return (page-1)*pageSize;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "PageBean{" +
+				"page=" + page +
+				", pageSize=" + pageSize +
+				", start=" + start +
+				'}';
+	}
 }
