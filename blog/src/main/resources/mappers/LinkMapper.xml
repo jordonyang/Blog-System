@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yang.www.dao.LinkDao">
+
+	<resultMap type="Link" id="LinkResult">
+		<result property="linkId" column="link_id"/>
+		<result property="linkName" column="link_name"/>
+		<result property="linkPath" column="link_url"/>
+		<result property="ordinal" column="ordinal"/>
+	</resultMap>
+	
+	<select id="getLinks" parameterType="java.util.Map" resultMap="LinkResult">
+		select * from link
+	</select>
+
+</mapper> 
