@@ -1,53 +1,79 @@
-package com.java1234.util;
+package com.yang.www.utils;
 
-/**
- * ·ÖÒ³¹¤¾ßÀà
- * @author Administrator
- *
- */
+
+import com.yang.www.po.Blog;
+
 public class PageUtil {
 
-	/**
-	 * Éú³É·ÖÒ³´úÂë
-	 * @param targetUrl Ä¿±êµØÖ·
-	 * @param totalNum ×Ü¼ÇÂ¼Êı
-	 * @param currentPage µ±Ç°Ò³
-	 * @param pageSize Ã¿Ò³´óĞ¡
-	 * @return
-	 */
-	public static String genPagination(String targetUrl,long totalNum,int currentPage,int pageSize,String param){
+	public static String genUpAndDownPageCode(Integer page,Integer totalNum,String q,Integer pageSize,String projectContext){
 		long totalPage=totalNum%pageSize==0?totalNum/pageSize:totalNum/pageSize+1;
+		StringBuffer pageCode=new StringBuffer();
 		if(totalPage==0){
-			return "Î´²éÑ¯µ½Êı¾İ";
+			return "";
 		}else{
-			StringBuffer pageCode=new StringBuffer();
-			pageCode.append("<li><a href='"+targetUrl+"?page=1&"+param+"'>Ê×Ò³</a></li>");
-			if(currentPage>1){
-				pageCode.append("<li><a href='"+targetUrl+"?page="+(currentPage-1)+"&"+param+"'>ÉÏÒ»Ò³</a></li>");			
+			pageCode.append("<nav>");
+			pageCode.append("<ul class='pager'>");
+			if(page>1){
+				pageCode.append("<li><a href='"+projectContext+"/blog/search.html?page="+(page-1)+"&input="+q+"'>ä¸Šä¸€é¡µ</a></li>");
 			}else{
-				pageCode.append("<li class='disabled'><a href='"+targetUrl+"?page="+(currentPage-1)+"&"+param+"'>ÉÏÒ»Ò³</a></li>");		
+				pageCode.append("<li class='disabled'><a href='#'>ä¸Šä¸€é¡µ</a></li>");
 			}
-			for(int i=currentPage-2;i<=currentPage+2;i++){
-				if(i<1||i>totalPage){
+			if(page<totalPage){
+				pageCode.append("<li><a href='"+projectContext+"/blog/search.html?page="+(page+1)+"&input="+q+"'>ä¸‹ä¸€é¡µ</a></li>");
+			}else{
+				pageCode.append("<li class='disabled'><a href='#'>ä¸‹ä¸€é¡µ</a></li>");
+			}
+			pageCode.append("</ul>");
+			pageCode.append("</nav>");
+		}
+		return pageCode.toString();
+	}
+
+	public static String getUpAndDownPageCode(Blog lastBlog, Blog nextBlog, String projectContext){
+		StringBuffer pageCode=new StringBuffer();
+		if(lastBlog==null || lastBlog.getBlogId()==null){
+			pageCode.append("<p>ä¸Šä¸€ç¯‡ï¼šæ²¡æœ‰äº†</p>");
+		}else{
+			pageCode.append("<p>ä¸Šä¸€ç¯‡ï¼š<a href='"+projectContext+"/blog/articles/"+lastBlog.getBlogId()+".html'>"+lastBlog.getTitle()+"</a></p>");
+		}
+
+		if(nextBlog==null || nextBlog.getBlogId()==null){
+			pageCode.append("<p>ä¸‹ä¸€ç¯‡ï¼šæ²¡æœ‰äº†</p>");
+		}else{
+			pageCode.append("<p>ä¸‹ä¸€ç¯‡ï¼š<a href='"+projectContext+"/blog/articles/"+nextBlog.getBlogId()+".html'>"+nextBlog.getTitle()+"</a></p>");
+		}
+		return pageCode.toString();
+	}
+
+	public static String genPagination(String targetUrl, long totalNum, int currentPage, int pageSize, String param) {
+		long totalPage = totalNum % pageSize == 0 ? totalNum / pageSize : totalNum / pageSize + 1;
+		if (totalPage == 0) {
+			return "æœªæŸ¥è¯¢åˆ°æ•°æ®";
+		} else {
+			StringBuffer pageCode = new StringBuffer();
+			pageCode.append("<li><a href='" + targetUrl + "?page=1&" + param + "'>é¦–é¡µ</a></li>");
+			if (currentPage > 1) {
+				pageCode.append("<li><a href='" + targetUrl + "?page=" + (currentPage - 1) + "&" + param + "'>ä¸Šä¸€é¡µ</a></li>");
+			} else {
+				pageCode.append("<li class='disabled'><a href='" + targetUrl + "?page=" + (currentPage - 1) + "&" + param + "'>ä¸Šä¸€é¡µ</a></li>");
+			}
+			for (int i = currentPage - 2; i <= currentPage + 2; i++) {
+				if (i < 1 || i > totalPage) {
 					continue;
 				}
-				if(i==currentPage){
-					pageCode.append("<li class='active'><a href='"+targetUrl+"?page="+i+"&"+param+"'>"+i+"</a></li>");	
-				}else{
-					pageCode.append("<li><a href='"+targetUrl+"?page="+i+"&"+param+"'>"+i+"</a></li>");	
+				if (i == currentPage) {
+					pageCode.append("<li class='active'><a href='" + targetUrl + "?page=" + i + "&" + param + "'>" + i + "</a></li>");
+				} else {
+					pageCode.append("<li><a href='" + targetUrl + "?page=" + i + "&" + param + "'>" + i + "</a></li>");
 				}
 			}
-			if(currentPage<totalPage){
-				pageCode.append("<li><a href='"+targetUrl+"?page="+(currentPage+1)+"&"+param+"'>ÏÂÒ»Ò³</a></li>");		
-			}else{
-				pageCode.append("<li class='disabled'><a href='"+targetUrl+"?page="+(currentPage+1)+"&"+param+"'>ÏÂÒ»Ò³</a></li>");	
+			if (currentPage < totalPage) {
+				pageCode.append("<li><a href='" + targetUrl + "?page=" + (currentPage + 1) + "&" + param + "'>ä¸‹ä¸€é¡µ</a></li>");
+			} else {
+				pageCode.append("<li class='disabled'><a href='" + targetUrl + "?page=" + (currentPage + 1) + "&" + param + "'>ä¸‹ä¸€é¡µ</a></li>");
 			}
-			pageCode.append("<li><a href='"+targetUrl+"?page="+totalPage+"&"+param+"'>Î²Ò³</a></li>");
+			pageCode.append("<li><a href='" + targetUrl + "?page=" + totalPage + "&" + param + "'>å°¾é¡µ</a></li>");
 			return pageCode.toString();
 		}
 	}
-	
-
-	
-	
 }
