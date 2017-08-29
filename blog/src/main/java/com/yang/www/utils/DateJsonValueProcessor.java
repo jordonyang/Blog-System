@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 
+/**
+ * 将Date数据转化为JSon形式
+ */
 public class DateJsonValueProcessor implements JsonValueProcessor{
 
 	private String format;  
