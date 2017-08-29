@@ -5,11 +5,6 @@ import java.text.SimpleDateFormat;
 import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 
-/**
- * json-lib ���ڴ�����
- * @author Administrator
- *
- */
 public class DateJsonValueProcessor implements JsonValueProcessor{
 
 	private String format;  
@@ -19,7 +14,6 @@ public class DateJsonValueProcessor implements JsonValueProcessor{
     }  
     
 	public Object processArrayValue(Object value, JsonConfig jsonConfig) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -38,8 +32,7 @@ public class DateJsonValueProcessor implements JsonValueProcessor{
             String str = new SimpleDateFormat(format).format((java.util.Date) value);  
             return str;  
         }  
-          
-        return value.toString(); 
+        return value.toString();
 	}
 
 }
