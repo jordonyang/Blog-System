@@ -1,21 +1,10 @@
-package com.java1234.util;
+package com.yang.www.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * 日期工具类
- * @author Administrator
- *
- */
 public class DateUtil {
 
-	/**
-	 * 日期对象转字符串
-	 * @param date
-	 * @param format
-	 * @return
-	 */
 	public static String formatDate(Date date,String format){
 		String result="";
 		SimpleDateFormat sdf=new SimpleDateFormat(format);
@@ -24,26 +13,24 @@ public class DateUtil {
 		}
 		return result;
 	}
-	
-	/**
-	 * 字符串转日期对象
-	 * @param str
-	 * @param format
-	 * @return
-	 * @throws Exception
-	 */
-	public static Date formatString(String str,String format) throws Exception{
+
+	public static Date formatString(String str,String format) {
+		Date date=null;
 		if(StringUtil.isEmpty(str)){
-			return null;
+			return date;
 		}
 		SimpleDateFormat sdf=new SimpleDateFormat(format);
-		return sdf.parse(str);
+		try{
+			date=sdf.parse(str);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return date;
 	}
 	
-	public static String getCurrentDateStr()throws Exception{
+	public static String getCurrentDateStr(){
 		Date date=new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddhhmmss");
 		return sdf.format(date);
 	}
-	
 }
