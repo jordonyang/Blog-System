@@ -12,7 +12,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="getLinks" parameterType="java.util.Map" resultMap="LinkResult">
-		select * from link
+		select * from link ORDER by ordinal
 	</select>
 
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from link where link_id=#{linkId}
+	</delete>
+
+    <select id="list" parameterType="java.util.Map" resultMap="LinkResult">
+        select * from link order by ordinal
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getTotal" parameterType="java.util.Map" resultType="java.lang.Long">
+        select count(*) from link
+    </select>
+
+    <insert id="add" parameterType="Link">
+        insert into link values(null,#{linkName},#{linkPath},#{ordinal});
+    </insert>
+
+    <update id="update" parameterType="Link">
+        update link
+        <set>
+            <if test="linkName!=null and linkName!=''">
+                link_name=#{linkName},
+            </if>
+            <if test="linkPath!=null and linkPath!=''">
+                link_url=#{linkPath},
+            </if>
+            <if test="ordinal!=null">
+                ordinal=#{ordinal},
+            </if>
+        </set>
+        where link_id=#{linkId}
+    </update>
 </mapper> 
