@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>博客类别管理页面</title>
+<title>博客类别管理</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
@@ -16,7 +16,7 @@
  	
 	function openBlogTypeAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","添加博客类别信息");
-		url="${pageContext.request.contextPath}/admin/blogType/save.do";
+		url="${pageContext.request.contextPath}/manage/blogType/save.do";
 	}
 	
 	function openBlogTypeModifyDialog(){
@@ -28,7 +28,7 @@
 		var row=selectedRows[0];
 		$("#dlg").dialog("open").dialog("setTitle","修改博客类别信息");
 		$("#fm").form("load",row);
-		url="${pageContext.request.contextPath}/admin/blogType/save.do?id="+row.id;
+		url="${pageContext.request.contextPath}/manage/blogType/save.do?typeId="+row.typeId;
 	}
 	
 	function saveBlogType(){
@@ -54,7 +54,7 @@
 	
 	function resetValue(){
 		$("#typeName").val("");
-		$("#orderNo").val("");
+		$("#ordinal").val("");
 	}
 	
 	function closeBlogTypeDialog(){
@@ -71,12 +71,12 @@
 		}
 		var strIds=[];
 		for(var i=0;i<selectedRows.length;i++){
-			strIds.push(selectedRows[i].id);
+			strIds.push(selectedRows[i].typeId);
 		}
 		var ids=strIds.join(",");
-		$.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
-			if(r){
-				$.post("${pageContext.request.contextPath}/admin/blogType/delete.do",{ids:ids},function(result){
+		$.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(confirmed){
+			if(confirmed){
+				$.post("${pageContext.request.contextPath}/manage/blogType/delete.do",{ids:ids},function(result){
 					if(result.success){
 						if(result.exist){
 							$.messager.alert("系统提示",result.exist);
@@ -97,13 +97,13 @@
 <body style="margin: 1px">
 <table id="dg" title="博客类别管理" class="easyui-datagrid" 
   fitColumns="true" pagination="true" rownumbers="true"
-  url="${pageContext.request.contextPath}/admin/blogType/list.do" fit="true" toolbar="#tb">
+  url="${pageContext.request.contextPath}/manage/blogType/list.do" fit="true" toolbar="#tb">
   <thead>
   	<tr>
   		<th field="cb" checkbox="true" align="center"></th>
-  		<th field="id" width="20" align="center">编号</th>
-  		<th field="typeName" width="100" align="center">博客类型名称</th>
-  		<th field="orderNo" width="100" align="center">排序序号</th>
+  		<th field="typeId" width="20" align="center">编号</th>
+  		<th field="typeName" width="100" align="center">类型名称</th>
+  		<th field="ordinal" width="100" align="center">排序序号</th>
   	</tr>
   </thead>
 </table>
@@ -127,7 +127,7 @@
 			<tr>
 				<td>博客类别排序：</td>
 				<td>
-					<input type="text" id="orderNo" name="orderNo" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(类别根据排序序号从小到大排序)
+					<input type="text" id="ordinal" name="ordinal" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(类别根据排序序号从小到大排序)
 				</td>
 			</tr>
 		</table>
