@@ -12,7 +12,7 @@ import com.yang.www.po.Blogger;
 import com.yang.www.service.BloggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class MyRealm extends AuthorizingRealm{
+public class BloggerRealm extends AuthorizingRealm{
 
 	private BloggerService bloggerService;
 	@Autowired
@@ -25,8 +25,14 @@ public class MyRealm extends AuthorizingRealm{
 		return null;
 	}
 
+	/**
+	 * Shiro验证登录
+	 * @param token
+	 * @return
+	 * @throws AuthenticationException
+	 */
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
 		String userName=(String) token.getPrincipal();
 		Blogger blogger=bloggerService.getBloggerByName(userName);
 		if(blogger!=null){
@@ -37,5 +43,4 @@ public class MyRealm extends AuthorizingRealm{
 			return null;			
 		}
 	}
-
 }
