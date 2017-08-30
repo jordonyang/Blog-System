@@ -24,7 +24,7 @@
 		var title=$("#title").val();
 		var blogTypeId=$("#blogTypeId").combobox("getValue")
 		var content=UE.getEditor('editor').getContent()
-		var keyWord=$("#keyWord").val();
+		var keyword=$("#keyword").val();
 		
 		if(title==null || title==''){
 			alert("请输入标题！");
@@ -33,9 +33,9 @@
 		}else if(content==null || content==''){
 			alert("请填写内容！");
 		}else{
-			$.post("${pageContext.request.contextPath}/admin/blog/save.do",{'title':title,'blogType.id':blogTypeId,
-				'contentNoTag':UE.getEditor('editor').getContentTxt(),
-				'content':content,'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+			$.post("${pageContext.request.contextPath}/manage/blog/save.do",{'title':title,'blogType.typeId':blogTypeId,
+				'contentWithoutTags':UE.getEditor('editor').getContentTxt(),
+				'content':content,'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyword':keyword},function(result){
 				if(result.success){
 					alert("博客发布成功！");
 					resultValue();
@@ -50,7 +50,7 @@
 		$("#title").val("");
 		$("#blogTypeId").combobox("setValue","");
 		UE.getEditor('editor').setContent('');
-		$("#keyWord").val("");
+		$("#keyword").val("");
 	}
 </script>
 </head>
@@ -78,13 +78,13 @@
 		<tr>
 			<td valign="top">博客内容：</td>
 			<td>
-				<script id="editor" name="content" type="text/plain" style="width:98%;height:400px;"></script>
+				<script id="editor" name="content" type="text/plain" style="width:100%;height:300px;"></script>
 			</td>
 		</tr>
 		<tr>
 			<td>关键字：</td>
 			<td>
-				<input type="text" id="keyWord" name="keyWord" style="width: 400px"/>&nbsp;(多个关键字中间用空格隔开)
+				<input type="text" id="keyword" name="keyword" style="width: 400px"/>&nbsp;(多个关键字中间用空格隔开)
 			</td>
 		</tr>
 		<tr>
