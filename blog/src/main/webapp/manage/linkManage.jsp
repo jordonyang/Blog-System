@@ -16,7 +16,7 @@
  	
 	function openLinkAddDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","添加友情链接信息");
-		url="${pageContext.request.contextPath}/admin/link/save.do";
+		url="${pageContext.request.contextPath}/manage/link/save.do";
 	}
 	
 	function openLinkModifyDialog(){
@@ -28,7 +28,7 @@
 		var row=selectedRows[0];
 		$("#dlg").dialog("open").dialog("setTitle","修改友情链接信息");
 		$("#fm").form("load",row);
-		url="${pageContext.request.contextPath}/admin/link/save.do?id="+row.id;
+		url="${pageContext.request.contextPath}/manage/link/save.do?linkId="+row.linkId;
 	}
 	
 	function saveLink(){
@@ -72,12 +72,12 @@
 		}
 		var strIds=[];
 		for(var i=0;i<selectedRows.length;i++){
-			strIds.push(selectedRows[i].id);
+			strIds.push(selectedRows[i].linkId);
 		}
 		var ids=strIds.join(",");
 		$.messager.confirm("系统提示","您确定要删除这<font color=red>"+selectedRows.length+"</font>条数据吗？",function(r){
 			if(r){
-				$.post("${pageContext.request.contextPath}/admin/link/delete.do",{ids:ids},function(result){
+				$.post("${pageContext.request.contextPath}/manage/link/delete.do",{ids:ids},function(result){
 					if(result.success){
 						$.messager.alert("系统提示","数据已成功删除！");							
 						$("#dg").datagrid("reload");
@@ -94,14 +94,14 @@
 <body style="margin: 1px">
 <table id="dg" title="友情链接管理" class="easyui-datagrid" 
   fitColumns="true" pagination="true" rownumbers="true"
-  url="${pageContext.request.contextPath}/admin/link/list.do" fit="true" toolbar="#tb">
+  url="${pageContext.request.contextPath}/manage/link/list.do" fit="true" toolbar="#tb">
   <thead>
   	<tr>
   		<th field="cb" checkbox="true" align="center"></th>
-  		<th field="id" width="20" align="center">编号</th>
+  		<th field="linkId" width="20" align="center">编号</th>
   		<th field="linkName" width="200" align="center">友情链接名称</th>
-  		<th field="linkUrl" width="200" align="center">友情链接地址</th>
-  		<th field="orderNo" width="100" align="center">排序序号</th>
+  		<th field="linkPath" width="200" align="center">友情链接地址</th>
+  		<th field="ordinal" width="100" align="center">排序序号</th>
   	</tr>
   </thead>
 </table>
@@ -125,13 +125,13 @@
 			<tr>
 				<td>友情链接地址：</td>
 				<td>
-					<input type="text" id="linkUrl" name="linkUrl" class="easyui-validatebox" validtype="url" required="true" style="width: 250px"/>
+					<input type="text" id="linkPath" name="linkPath" class="easyui-validatebox" validtype="url" required="true" style="width: 250px"/>
 				</td>
 			</tr>
 			<tr>
 				<td>友情链接排序：</td>
 				<td>
-					<input type="text" id="orderNo" name="orderNo" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(友情链接根据排序序号从小到大排序)
+					<input type="text" id="ordinal" name="ordinal" class="easyui-numberbox" required="true" style="width: 60px"/>&nbsp;(友情链接根据排序序号从小到大排序)
 				</td>
 			</tr>
 		</table>
