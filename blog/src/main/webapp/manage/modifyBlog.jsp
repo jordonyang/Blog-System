@@ -11,12 +11,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
-
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/ueditor.all.min.js"> </script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-<script type="text/javascript" charset="gbk" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath}/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 <script type="text/javascript">
 	
@@ -24,7 +23,7 @@
 		var title=$("#title").val();
 		var blogTypeId=$("#blogTypeId").combobox("getValue")
 		var content=UE.getEditor('editor').getContent()
-		var keyWord=$("#keyWord").val();
+		var keyword=$("#keyword").val();
 		
 		if(title==null || title==''){
 			alert("请输入标题！");
@@ -33,9 +32,9 @@
 		}else if(content==null || content==''){
 			alert("请填写内容！");
 		}else{
-			$.post("${pageContext.request.contextPath}/admin/blog/save.do",{'id':'${param.id}','title':title,'blogType.id':blogTypeId,
-				'contentNoTag':UE.getEditor('editor').getContentTxt(),
-				'content':content,'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyWord':keyWord},function(result){
+			$.post("${pageContext.request.contextPath}/manage/blog/save.do",{'blogId':'${param.blogId}','title':title,'blogType.typeId':blogTypeId,
+				'contentWithoutTags':UE.getEditor('editor').getContentTxt(),
+				'content':content,'summary':UE.getEditor('editor').getContentTxt().substr(0,155),'keyword':keyword},function(result){
 				if(result.success){
 					alert("博客修改成功！");
 				}else{
@@ -61,10 +60,10 @@
 		<tr>
 			<td>所属类别：</td>
 			<td>
-				<select class="easyui-combobox" style="width: 154px" id="blogTypeId" name="blogType.id" editable="false" panelHeight="auto">
+				<select class="easyui-combobox" style="width: 154px" id="blogTypeId" name="blogType.typeId" editable="false" panelHeight="auto">
 					<option value="">请选择博客类别...</option>
 					<c:forEach var="blogType" items="${blogTypeCountList }">
-						<option value="${blogType.id }">${blogType.typeName }</option>
+						<option value="${blogType.typeId }">${blogType.typeName }</option>
 					</c:forEach>
 				</select>
 			</td>
@@ -78,7 +77,7 @@
 		<tr>
 			<td>关键字：</td>
 			<td>
-				<input type="text" id="keyWord" name="keyWord" style="width: 400px"/>&nbsp;(多个关键字中间用空格隔开)
+				<input type="text" id="keyword" name="keyword" style="width: 400px"/>&nbsp;(多个关键字中间用空格隔开)
 			</td>
 		</tr>
 		<tr>
@@ -96,23 +95,20 @@
     
     ue.addListener("ready",function(){
     	// 通过ajax请求数据
-    	UE.ajax.request("${pageContext.request.contextPath}/admin/blog/findById.do",
+    	UE.ajax.request("${pageContext.request.contextPath}/manage/blog/showSelectedBlog.do",
     			{
     				method:"post",
     				async:false,
-    				data:{"id":"${param.id}"},
+    				data:{"id":"${param.blogId}"},
     				onsuccess:function(result){
     					result=eval("("+result.responseText+")");
     					$("#title").val(result.title);
-    					$("#keyWord").val(result.keyWord);
-    					$("#blogTypeId").combobox("setValue",result.blogType.id);
+    					$("#keyword").val(result.keyword);
+    					$("#blogTypeId").combobox("setValue",result.blogType.typeId);
     					UE.getEditor('editor').setContent(result.content);
     				}
    			});
     });
 </script>
-
-
-
 </body>
 </html>
