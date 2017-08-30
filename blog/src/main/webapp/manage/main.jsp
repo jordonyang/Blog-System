@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>临风博客-后台管理页面</title>
+<title>临风博客-后台管理</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/themes/icon.css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/static/jquery-easyui-1.3.3/jquery.min.js"></script>
@@ -18,7 +18,7 @@
 		if($("#tabs").tabs("exists",text)){
 			$("#tabs").tabs("select",text);
 		}else{
-			var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/admin/"+url+"'></iframe>";
+			var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:100%' src='/manage/"+url+"'></iframe>";
 			$("#tabs").tabs("add",{
 				title:text,
 				iconCls:iconCls,
@@ -30,7 +30,7 @@
 	
 	function openPasswordModifyDialog(){
 		$("#dlg").dialog("open").dialog("setTitle","修改密码");
-		url="${pageContext.request.contextPath}/admin/blogger/modifyPassword.do";
+		url="${pageContext.request.contextPath}/manage/blogger/modifyPassword.do";
 	}
 	
 	function modifyPassword(){
@@ -73,7 +73,7 @@
 	}
 
 	function refreshSystem(){
-		$.post("${pageContext.request.contextPath}/admin/system/refreshSystem.do",{},function(result){
+		$.post("${pageContext.request.contextPath}/manage/system/refreshSystem.do",{},function(result){
 			if(result.success){
 				$.messager.alert("系统提示","已成功刷新系统缓存！");
 			}else{
@@ -85,7 +85,7 @@
 	function logout(){
 		$.messager.confirm("系统提示","您确定要退出系统吗?",function(r){
 			if(r){
-				window.location.href="${pageContext.request.contextPath}/admin/blogger/logout.do";
+				window.location.href="${pageContext.request.contextPath}/manage/blogger/logout.do";
 			}
 		});
 	}
@@ -96,7 +96,7 @@
 	<table style="padding: 5px" width="100%">
 		<tr>
 			<td width="50%">
-				<img alt="logo" src="/static/images/logo.png">
+				<%--<img alt="logo" src="/static/images/logo.png">--%>
 			</td>
 			<td valign="bottom" align="right" width="50%">
 				<font size="3">&nbsp;&nbsp;<strong>欢迎：</strong>${currentUser.name }</font>
@@ -142,7 +142,7 @@
 	</div>
 </div>
 <div region="south" style="height: 25px;padding: 5px" align="center">
-	Copyright © 2012-2016 Java知识分享网 版权所有
+	Copyright © 2017 临风博客 版权所有
 </div>
 
 <div id="dlg" class="easyui-dialog" style="width: 400px;height: 200px;padding: 10px 20px" closed="true" buttons="#dlg-buttons">
