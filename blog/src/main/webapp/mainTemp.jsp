@@ -10,11 +10,13 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/blog.css">
 <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/bootstrap3/js/bootstrap.min.js"></script>
-<title>${pageTitle }-Powered by java1234</title>
+<title>${pageTitle }</title>
 <style type="text/css">
 	body{
 		padding-top: 10px;
 		padding-bottom: 40px;
+		background-image: url(${pageContext.request.contextPath}/static/images/lblue.jpg);
+		background-size: 100% 100%;
 	}
 </style>
 </head>
@@ -25,54 +27,46 @@
 	<jsp:include page="/foreground/common/menu.jsp"/>
 	
 	<div class="row">
-	  <div class="col-md-9">
-	  	<jsp:include page="${mainPage }"/>
-	  </div>
-	  <div class="col-md-3">
+	  <div class="col-md-2">
 	  		<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/user_icon.png"/>
-					博主信息
+					个人信息
 				</div>
 				<div class="user_image">
-					<img src="${pageContext.request.contextPath}/static/userImages/${blogger.imageName}"/>
+					<img style="width: 90px;height: auto" src="${pageContext.request.contextPath}/static/userImages/hei.jpg"/>
 				</div>
-				<div class="nickName">${blogger.nickName}</div>
-				<div class="userSign">(${blogger.sign})</div>
+				<br>
+				<div class="nickName">${blogger.nickname}</div>
+				<div class="userSign">(${blogger.signature})</div>
 			</div>
-	  	
 	  		<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/byType_icon.png"/>
-					按日志类别
+					文章分类
 				</div>
 				<div class="datas">
 					<ul>
 						<c:forEach var="blogTypeCount" items="${blogTypeCountList }">
-							<li><span><a href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.id}">${blogTypeCount.typeName }(${blogTypeCount.blogCount })</a></span></li>
+							<li><span><a href="${pageContext.request.contextPath}/index.html?typeId=${blogTypeCount.typeId}">${blogTypeCount.typeName }(${blogTypeCount.blogCount })</a></span></li>
 						</c:forEach>
-						
 					</ul>
 				</div>
 			</div>
-	  		
-	  		
-	  		
+
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/byDate_icon.png"/>
-					按日志日期
+					归档日期
 				</div>
 				<div class="datas">
 					<ul>
 						<c:forEach var="blogCount" items="${blogCountList }">
 							<li><span><a href="${pageContext.request.contextPath}/index.html?releaseDateStr=${blogCount.releaseDateStr}">${blogCount.releaseDateStr }(${blogCount.blogCount })</a></span></li>
 						</c:forEach>
-						
 					</ul>
 				</div>
 			</div>
-			
 			<div class="data_list">
 				<div class="data_list_title">
 					<img src="${pageContext.request.contextPath}/static/images/link_icon.png"/>
@@ -81,20 +75,18 @@
 				<div class="datas">
 					<ul>
 						<c:forEach var="link" items="${linkList }">
-							<li><span><a href="${link.linkUrl }" target="_blank">${link.linkName }</a></span></li>
+							<li><span><a href="${link.linkPath }" target="_blank">${link.linkName }</a></span></li>
 						</c:forEach>
-						
-						
 					</ul>
 				</div>
 			</div>
-	  		
 	  </div>
+		<div class="col-md-10">
+			<jsp:include page="${mainPage }"/>
+		</div>
+	</div>
+	<jsp:include page="/foreground/common/foot.jsp"/>
 	</div>
 
-	<jsp:include page="/foreground/common/foot.jsp"/>
-
-	
-</div>
 </body>
 </html>
