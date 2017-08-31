@@ -34,15 +34,15 @@ int xl = random.nextInt(12);
 int yl = random.nextInt(12);
 g.drawLine(x,y,x+xl,y+yl);
 }
-String sRand="";
+String verificationCode="";
 for (int i=0;i<4;i++){
 String rand=String.valueOf(random.nextInt(10));
-sRand+=rand;
+verificationCode+=rand;
 g.setColor(new Color(20+random.nextInt(110),20+random.nextInt(110),20+random.nextInt(110)));
 g.drawString(rand,13*i+6,16);
 }
 // 将验证码存入SESSION
-session.setAttribute("sRand",sRand);
+session.setAttribute("verificationCode",verificationCode);
 g.dispose();
 ImageIO.write(image, "JPEG", response.getOutputStream());
 %>
