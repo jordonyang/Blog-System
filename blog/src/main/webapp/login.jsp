@@ -4,20 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Java开源博客系统后台登录页面-Powered by java1234</title>
+<title>临风博客-后台登录页面</title>
 <script src="${pageContext.request.contextPath}/static/bootstrap3/js/jquery-1.11.2.min.js"></script>
 <STYLE>
 body{
-	background: #ebebeb;
 	font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
-	color: #222;
 	font-size: 12px;
+	background-image: url(${pageContext.request.contextPath}/static/images/blue.jpg);
+	background-size: 100% 100%;
 }
 *{padding: 0px;margin: 0px;}
 .top_div{
-	background: #008ead;
 	width: 100%;
-	height: 400px;
+	height: 300px;
 }
 .ipt{
 	border: 1px solid #d3d3d3;
@@ -145,9 +144,9 @@ $(function(){
 });
 
 function checkForm(){
-	var userName=$("#userName").val();
+	var name=$("#name").val();
 	var password=$("#password").val();
-	if(userName==null||userName==""){
+	if(name==null||name==""){
 		$("#error").html("用户名不能为空！");
 		return false;
 	}
@@ -174,7 +173,7 @@ function checkForm(){
 		</DIV>
 		<P style="padding: 30px 0px 10px; position: relative;">
 			<SPAN class="u_logo"></SPAN>
-			<INPUT id="userName" name="userName" class="ipt" type="text" placeholder="请输入用户名" value="${blogger.userName }"> 
+			<INPUT id="name" name="name" class="ipt" type="text" placeholder="请输入用户名" value="${blogger.name }">
 	    </P>
 		<P style="position: relative;">
 			<SPAN class="p_logo"></SPAN>         
@@ -182,7 +181,6 @@ function checkForm(){
 	  	</P>
 		<DIV style="height: 50px; line-height: 50px; margin-top: 30px; border-top-color: rgb(231, 231, 231); border-top-width: 1px; border-top-style: solid;">
 			<P style="margin: 0px 35px 20px 45px;">
-			<SPAN style="float: left;">Java开源博客系统</SPAN> 
 			<span><font color="red" id="error">${errorInfo }</font></span>
 	        <SPAN style="float: right;"> 
 	              <input type="submit" style="background: rgb(0, 142, 173); padding: 7px 10px; border-radius: 4px; border: 1px solid rgb(26, 117, 152); border-image: none; color: rgb(255, 255, 255); font-weight: bold;" value="登录"/> 
@@ -192,7 +190,7 @@ function checkForm(){
 	</DIV>
 </form>
 <div style="text-align:center;padding-top: 30px">
-Copyright © 2012-2016 Java知识分享网 版权所有
+Copyright © 2017 临风博客
 </div>
 </body>
 </html>
