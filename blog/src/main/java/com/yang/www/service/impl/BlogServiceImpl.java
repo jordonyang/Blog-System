@@ -98,16 +98,16 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public void save(Blog blog, HttpServletResponse response) {
-        int effectedRows=0;
+        int affectedRows=0;
         if(blog.getBlogId()==null){
-            effectedRows=blogDao.add(blog);
+            affectedRows=blogDao.add(blog);
             blogIndexer.addIndex(blog);
         }else{
-            effectedRows=blogDao.update(blog);
+            affectedRows=blogDao.update(blog);
             blogIndexer.updateIndex(blog);
         }
         JSONObject result=new JSONObject();
-        if(effectedRows>0){
+        if(affectedRows>0){
             result.put("success", true);
         }else{
             result.put("success", false);

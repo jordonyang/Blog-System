@@ -53,14 +53,14 @@ public class LinkServiceImpl implements LinkService {
      */
     @Override
     public void save(Link link, HttpServletResponse response) {
-        int effectedRows=0;
+        int affectedRows=0;
         if(link.getLinkId()==null){
-            effectedRows=linkDao.add(link);
+            affectedRows=linkDao.add(link);
         }else{
-            effectedRows=linkDao.update(link);
+            affectedRows=linkDao.update(link);
         }
         JSONObject result=new JSONObject();
-        if(effectedRows>0){
+        if(affectedRows>0){
             result.put("success", true);
         }else{
             result.put("success", false);

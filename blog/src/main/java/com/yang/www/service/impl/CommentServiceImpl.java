@@ -95,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
     public void save(Comment comment, String imageCode, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String sRand=(String) session.getAttribute("verificationCode");
         JSONObject result=new JSONObject();
-        int effectRows=0;
+        int affectRows=0;
         if(!imageCode.equals(sRand)){
             result.put("success", false);
             result.put("msg", "验证码填写错误!");
@@ -103,14 +103,14 @@ public class CommentServiceImpl implements CommentService {
             String userIp=request.getRemoteAddr();
             comment.setUserIp(userIp);
             if(comment.getCommentId()==null){
-                effectRows=commentDao.add(comment);
+                affectRows=commentDao.add(comment);
                 // 博客的回复次数加1
                 Blog blog=blogDao.findById(comment.getBlog().getBlogId());
                 blog.setCommentCount(blog.getCommentCount()+1);
                 blogDao.update(blog);
             }
         }
-        if(effectRows>0){
+        if(affectRows>0){
             result.put("success", true);
         }else{
             result.put("success", false);

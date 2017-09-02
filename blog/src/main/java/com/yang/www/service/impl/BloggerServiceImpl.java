@@ -56,9 +56,9 @@ public class BloggerServiceImpl implements BloggerService{
             }
             blogger.setImagePath(imageName);
         }
-        int effectedRows = bloggerDao.update(blogger);
+        int affectedRows = bloggerDao.update(blogger);
         StringBuffer result = new StringBuffer();
-        if (effectedRows > 0) {
+        if (affectedRows> 0) {
             result.append("<script language='javascript'>alert('修改成功！');</script>");
         } else {
             result.append("<script language='javascript'>alert('修改失败！');</script>");
@@ -73,9 +73,9 @@ public class BloggerServiceImpl implements BloggerService{
      */
     @Override
     public void update(Blogger blogger,HttpServletResponse response) {
-        int effectedRows=bloggerDao.update(blogger);
+        int affectedRows=bloggerDao.update(blogger);
         JSONObject result=new JSONObject();
-        if(effectedRows>0){
+        if(affectedRows>0){
             result.put("success", true);
         }else{
             result.put("success", false);
